@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AnimeStyle — Panel Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+  <!-- ─── LOGIN ─── -->
+  <div class="login-screen" id="login-screen">
+    <div class="login-box">
+      <div class="logo">🍡 Admin</div>
+      <h2>Panel de Administración</h2>
+      <p>Ingresa tus credenciales para gestionar la tienda</p>
+      <input type="text" id="login-user" placeholder="Usuario" autocomplete="off" />
+      <input type="password" id="login-pass" placeholder="Contraseña" />
+      <button onclick="doLogin()">🔐 Iniciar sesión</button>
+      <div class="error" id="login-error"></div>
+    </div>
+  </div>
+
+  <!-- ─── ADMIN ─── -->
+  <div class="admin-wrap" id="admin-wrap">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="logo">🍡 Anime<span>Style</span> <span style="font-size:.7rem;-webkit-text-fill-color:var(--text-dim);background:none;font-weight:400">· Admin</span></div>
+      <div class="right">
+        <a href="index.html" class="badge">🔗 Ver tienda</a>
+        <button class="logout" onclick="doLogout()">🚪 Salir</button>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-tab="products">📦 Productos</button>
+      <button class="tab" data-tab="orders">📋 Pedidos</button>
+      <button class="tab" data-tab="coupons">🏷️ Cupones</button>
+      <button class="tab" data-tab="analytics">📊 Analytics</button>
+    </div>
+
+    <!-- ─── TAB: PRODUCTS ─── -->
+    <div class="dashboard tab-content active" id="tab-products">
+      <div class="stats" id="product-stats"></div>
+      <div class="toolbar">
+        <h2>📦 Productos</h2>
+        <div class="actions">
+          <button class="btn btn-green" onclick="openProductModal()">➕ Nuevo producto</button>
+          <button class="btn btn-secondary" onclick="resetAll()">🔄 Restaurar</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Nombre</th>
+              <th>Serie</th>
+              <th>Precio</th>
+              <th>Etiqueta</th>
+              <th>Rating</th>
+              <th style="width:100px">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="products-body"></tbody>
+        </table>
+      </div>
+      <p style="color:var(--text-dim);font-size:.8rem;margin-top:1rem;text-align:center">💡 Los cambios se guardan en localStorage. Al abrir la tienda verás los productos actualizados.</p>
+    </div>
+
+    <!-- ─── TAB: ORDERS ─── -->
+    <div class="dashboard tab-content" id="tab-orders">
+      <div class="stats" id="order-stats"></div>
+      <div class="toolbar">
+        <h2>📋 Pedidos</h2>
+        <div class="actions">
+          <button class="btn btn-secondary" onclick="fillDemoOrders()" id="demo-orders-btn">📥 Generar pedidos demo</button>
+        </div>
+      </div>
+      <div id="orders-container"></div>
+    </div>
+
+    <!-- ─── TAB: COUPONS ─── -->
+    <div class="dashboard tab-content" id="tab-coupons">
+      <div class="toolbar">
+        <h2>🏷️ Cupones</h2>
+        <div class="actions">
+          <button class="btn btn-green" onclick="openCouponModal()">➕ Nuevo cupón</button>
+          <button class="btn btn-secondary" onclick="resetCoupons();renderCoupons();showToast('🔄 Cupones restaurados')">🔄 Restaurar</button>
+        </div>
+      </div>
+      <div class="coupon-grid" id="coupons-container"></div>
+    </div>
+
+    <!-- ─── TAB: ANALYTICS ─── -->
+    <div class="dashboard tab-content" id="tab-analytics">
+      <div class="analytics-grid" id="analytics-cards"></div>
+      <div class="top-products" id="top-products-container"></div>
+    </div>
+  </div>
+
+  <!-- ─── PRODUCT MODAL ─── -->
+  <div class="modal-overlay" id="product-modal">
+    <div class="modal">
+      <h3 id="product-modal-title">✏️ Editar producto</h3>
+      <input type="hidden" id="f-id" />
+
+      <div class="image-upload">
+        <div class="preview" id="f-preview">
+          <span style="font-size:2.5rem">👕</span>
+        </div>
+        <label class="file-btn">📁 Subir imagen <input type="file" id="f-file" accept="image/*" onchange="handleFileUpload(this)" /></label>
+        <span style="font-size:.75rem;color:var(--text-dim)">o pega una URL</span>
+        <input type="url" id="f-image" placeholder="https://ejemplo.com/imagen.jpg" oninput="previewProductImage()" style="text-align:center" />
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Nombre del producto *</label>
+          <input type="text" id="f-name" placeholder="Ej: Zoro — Wano Edition" />
+        </div>
+        <div class="field">
+          <label>Serie *</label>
+          <input type="text" id="f-series" placeholder="Ej: One Piece" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Descripción</label>
+        <textarea id="f-desc" placeholder="Descripción detallada del producto..."></textarea>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Precio ($) *</label>
+          <input type="number" id="f-price" step="0.01" min="0" placeholder="39.90" />
+        </div>
+        <div class="field">
+          <label>Rating (0–5)</label>
+          <input type="number" id="f-rating" step="0.1" min="0" max="5" value="5.0" />
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Tipo de etiqueta</label>
+          <select id="f-tag">
+            <option value="">— Sin etiqueta —</option>
+            <option value="new">🆕 Nuevo</option>
+            <option value="hot">🔥 Popular</option>
+            <option value="limited">💎 Limitado</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Texto de etiqueta</label>
+          <input type="text" id="f-tagText" placeholder="Ej: Nuevo, Popular, Limitado" />
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal('product-modal')">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveProduct()">💾 Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── COUPON MODAL ─── -->
+  <div class="modal-overlay" id="coupon-modal">
+    <div class="modal">
+      <h3 id="coupon-modal-title">➕ Nuevo cupón</h3>
+      <input type="hidden" id="cf-id" />
+
+      <div class="field-row">
+        <div class="field">
+          <label>Código *</label>
+          <input type="text" id="cf-code" placeholder="Ej: ANIME20" style="text-transform:uppercase" />
+        </div>
+        <div class="field">
+          <label>Tipo</label>
+          <select id="cf-type">
+            <option value="percentage">% Porcentaje</option>
+            <option value="fixed">$ Monto fijo</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Valor *</label>
+          <input type="number" id="cf-value" step="0.01" min="0" placeholder="10" />
+        </div>
+        <div class="field">
+          <label>Compra mínima ($)</label>
+          <input type="number" id="cf-min" step="0.01" min="0" value="0" />
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Usos máximos</label>
+          <input type="number" id="cf-max" min="1" value="100" />
+        </div>
+        <div class="field">
+          <label>Expira (YYYY-MM-DD)</label>
+          <input type="date" id="cf-expires" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+          <input type="checkbox" id="cf-active" checked style="width:auto" /> Cupón activo
+        </label>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal('coupon-modal')">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveCoupon()">💾 Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── TOAST ─── -->
+  <div class="toast" id="toast">
+    <span class="icon">✅</span>
+    <span class="msg">Guardado</span>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

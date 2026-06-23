@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AnimeStyle — Tienda de Ropa Anime</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="data.js"></script>
+</head>
+<body>
+
+  <!-- Floating decorations -->
+  <div class="deco">🌸</div>
+  <div class="deco">⭐</div>
+  <div class="deco">🍡</div>
+  <div class="deco">✨</div>
+  <div class="deco">🎀</div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">🍡 Anime<span>Style</span></div>
+    <div class="nav-links">
+      <a href="#new">Novedades</a>
+      <a href="#shop">Catálogo</a>
+      <a href="#reviews">Reseñas</a>
+      <a href="#faq">FAQ</a>
+      <button class="nav-cart">
+        🛒 Carrito <span class="count" id="cart-count">0</span>
+      </button>
+      <button class="hamburger" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text reveal-left">
+      <div class="chips">
+        <span class="chip">✨ Nuevos drops cada mes</span>
+        <span class="chip">🎨 Diseños exclusivos</span>
+      </div>
+      <h1>
+        Viste tu<br/>
+        <span class="grad">anime</span><br/>
+        <span class="grad2">favorito</span> 🫶
+      </h1>
+      <p>
+        Ropa urbana curada con diseños originales de tus series y personajes 
+        preferidos. Calidad premium, estilo único.
+      </p>
+      <div class="btn-group">
+        <a href="#shop" class="btn btn-primary">🌸 Colección 2026</a>
+        <a href="#new" class="btn btn-secondary">✨ Novedades</a>
+      </div>
+    </div>
+    <div class="hero-visual reveal-right">
+      <div class="hero-card">
+        <div class="icon">👕</div>
+        <h3>+500 diseños</h3>
+        <p>De las series más populares</p>
+        <span class="deco-icon">🌸</span>
+      </div>
+      <div class="hero-card">
+        <div class="icon">🔥</div>
+        <h3>Drops mensuales</h3>
+        <p>Ediciones limitadas</p>
+        <span class="deco-icon">⭐</span>
+      </div>
+      <div class="hero-card">
+        <div class="icon">⭐</div>
+        <h3>4.9 estrellas</h3>
+        <p>+12,000 reseñas reales</p>
+        <span class="deco-icon">🎀</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED BENTO -->
+  <section class="section" id="new">
+    <div class="section-tag">🔥 Destacados</div>
+    <h2 class="section-title">Los más <span class="highlight">populares</span></h2>
+    <p class="section-sub">Diseños que arrasan esta semana — no te quedes sin el tuyo</p>
+    <div class="bento reveal-scale">
+      <div class="bento-item">
+        <span class="badge">#1 Más vendido</span>
+        <h3>Attack on Titan</h3>
+        <p>Survey Corps · Edición especial 2026 · Oversized fit</p>
+        <span class="price">$39.90</span>
+        <span class="bg-icon">🗡️</span>
+      </div>
+      <div class="bento-item">
+        <span class="badge green">Nuevo</span>
+        <h3>Demon Slayer — Hashira</h3>
+        <p>Colección completa con estampado premium</p>
+        <span class="price">$44.90</span>
+      </div>
+      <div class="bento-item">
+        <h3>One Piece — Wano Arc</h3>
+        <p>Estampado frontal y trasero</p>
+        <span class="price">$42.90</span>
+        <span class="bg-icon">☠️</span>
+      </div>
+      <div class="bento-item">
+        <span class="badge orange">🔥 Oferta</span>
+        <h3>2x $69.90</h3>
+        <p>Compra 2 camisetas y ahorra $20</p>
+        <span class="price">¡Aprovecha!</span>
+        <span class="bg-icon">🎉</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCT GRID -->
+  <section class="section" id="shop">
+    <div class="section-tag">🛍️ Catálogo</div>
+    <h2 class="section-title">Explora por <span class="highlight">serie</span></h2>
+    <p class="section-sub">Encuentra a tu personaje favorito — filtramos por calidad y originalidad</p>
+    <div class="product-grid" id="product-grid"></div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section" id="reviews">
+    <div class="section-tag">⭐ Reseñas</div>
+    <h2 class="section-title">Lo que dicen <span class="highlight">nuestros</span> otakus</h2>
+    <p class="section-sub">+12,000 compradores felices — esto es lo que opinan</p>
+    <div class="testimonials reveal">
+      <div class="testimonial-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <blockquote>"La calidad es increíble, el diseño de Gojo quedó perfecto. 
+          Pedí talla M y me quedó oversized como me gusta. ¡Ya quiero comprar más!"</blockquote>
+        <div class="author">
+          <div class="avatar">M</div>
+          <div>
+            <div class="name">Mitsuki Chan</div>
+            <div class="handle">@mitsuki.crafts</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <blockquote>"El envío fue súper rápido, llegó en 3 días. 
+          La tela es suave y el estampado se ve genial. 100% recomendado ✨"</blockquote>
+        <div class="author">
+          <div class="avatar" style="background:var(--grad-cosmic)">K</div>
+          <div>
+            <div class="name">Kaito Rivera</div>
+            <div class="handle">@kaito_r</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <blockquote>"Compré la colección de Demon Slayer y me encantó. 
+          Los diseños son originales, no esas cosas genéricas que venden en otros lados."</blockquote>
+        <div class="author">
+          <div class="avatar" style="background:linear-gradient(135deg,#fde68a,#fb923c)">S</div>
+          <div>
+            <div class="name">Sakura López</div>
+            <div class="handle">@sakura.tea</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST ROW -->
+  <section class="section">
+    <div class="trust-row reveal-scale">
+      <div class="trust-card">
+        <div class="icon">🚀</div>
+        <h4>Envío relámpago</h4>
+        <p>2–5 días hábiles a cualquier parte del país</p>
+      </div>
+      <div class="trust-card">
+        <div class="icon">💳</div>
+        <h4>Pago seguro</h4>
+        <p>SSL de grado bancario — tus datos protegidos</p>
+      </div>
+      <div class="trust-card">
+        <div class="icon">🔄</div>
+        <h4>30 días gratis</h4>
+        <p>Devuelve sin preguntas, sin costo</p>
+      </div>
+      <div class="trust-card">
+        <div class="icon">🎨</div>
+        <h4>Arte original</h4>
+        <p>Diseñado por fans, para fans — 100% único</p>
+      </div>
+      <div class="trust-card">
+        <div class="icon">💬</div>
+        <h4>Soporte real</h4>
+        <p>Humanos que responden en minutos</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="section">
+    <div class="newsletter-box reveal">
+      <h2>💌 ¿Te gusta el anime?</h2>
+      <p>Suscríbete y recibe 10% OFF en tu primera compra,<br/>más novedades y drops exclusivos cada mes</p>
+      <form class="newsletter-form" onsubmit="event.preventDefault(); alert('🎉 ¡Gracias por suscribirte! Revisa tu correo para el cupón de 10% OFF.');this.reset()">
+        <input type="email" placeholder="tu@correo.com" required />
+        <button type="submit">✨ Suscribirme</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="section-tag">❓ FAQ</div>
+    <h2 class="section-title">Preguntas <span class="highlight">frecuentes</span></h2>
+    <p class="section-sub">Todo lo que necesitas saber antes de comprar</p>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          ¿Cuánto tarda el envío?
+          <span class="arrow">▼</span>
+        </button>
+        <div class="faq-a">Entre 2 a 5 días hábiles a todo el país. Hacemos envíos internacionales con un plazo de 7–12 días.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          ¿Puedo devolver si no me gusta?
+          <span class="arrow">▼</span>
+        </button>
+        <div class="faq-a">¡Claro! Tienes 30 días para devolver cualquier producto sin necesidad de justificar. El proceso es gratuito.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          ¿Las tallas son reales?
+          <span class="arrow">▼</span>
+        </button>
+        <div class="faq-a">Sí, usamos tallas estándar. Si prefieres un fit más holgado, te recomendamos pedir una talla más. Incluimos guía de tallas en cada producto.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          ¿Los diseños se destiñen?
+          <span class="arrow">▼</span>
+        </button>
+        <div class="faq-a">No. Usamos estampado DTG (Direct To Garment) de alta calidad con tintas premium. Lavado del revés con agua fría y duran como nuevos.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">🍡 AnimeStyle</div>
+        <p>Ropa urbana con alma otaku. Diseños exclusivos, calidad premium, y envío rápido. Hecho por fans, para fans 🫶</p>
+      </div>
+      <div class="footer-col">
+        <h5>Tienda</h5>
+        <a href="#">Novedades</a>
+        <a href="#">Catálogo</a>
+        <a href="#">Ofertas</a>
+        <a href="#">Series</a>
+      </div>
+      <div class="footer-col">
+        <h5>Ayuda</h5>
+        <a href="#">Contacto</a>
+        <a href="#">Envíos</a>
+        <a href="#">Devoluciones</a>
+        <a href="#">FAQ</a>
+        <a href="admin.html" style="color:var(--purple);font-weight:700">⚙️ Admin</a>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <a href="#">Términos</a>
+        <a href="#">Privacidad</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 AnimeStyle — Todos los derechos reservados</p>
+      <div class="footer-socials">
+        <a href="#" aria-label="Twitter / X">𝕏</a>
+        <a href="#" aria-label="Instagram">📸</a>
+        <a href="#" aria-label="TikTok">🎵</a>
+        <a href="#" aria-label="Discord">💬</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ─── CART MODAL ─── -->
+  <div class="modal-overlay" id="cart-modal">
+    <div class="modal" style="max-width:600px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
+        <h3 style="font-size:1.3rem;font-weight:800">🛒 Tu carrito</h3>
+        <button onclick="closeCart()" style="background:none;border:none;color:var(--text-dim);font-size:1.5rem;cursor:pointer">✕</button>
+      </div>
+      <div id="cart-items" style="min-height:100px">
+        <div class="empty-state"><div class="icon">🛒</div><h3>Carrito vacío</h3><p style="font-size:.85rem;margin-top:4px">Agrega productos desde el catálogo</p></div>
+      </div>
+      <div id="cart-summary" style="display:none;border-top:1px solid var(--border);padding-top:1rem;margin-top:1rem">
+        <div style="display:flex;gap:.5rem;margin-bottom:1rem">
+          <input type="text" id="coupon-input" placeholder="¿Tienes un cupón?" style="flex:1;padding:10px 16px;border-radius:var(--radius-full);background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:inherit;font-size:.85rem;outline:none" />
+          <button onclick="applyCoupon()" class="btn btn-secondary btn-sm">Aplicar</button>
+        </div>
+        <div id="coupon-msg" style="font-size:.8rem;margin-bottom:.5rem"></div>
+        <div style="display:flex;justify-content:space-between;font-size:.95rem;margin-bottom:4px"><span>Subtotal</span><span id="cart-subtotal">$0.00</span></div>
+        <div id="cart-discount-row" style="display:none;justify-content:space-between;font-size:.9rem;color:var(--green)"><span>Descuento</span><span id="cart-discount">-$0.00</span></div>
+        <div style="display:flex;justify-content:space-between;font-weight:800;font-size:1.2rem;margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--border)"><span>Total</span><span id="cart-total">$0.00</span></div>
+        <button class="btn btn-primary" style="width:100%;margin-top:1.5rem;padding:16px;justify-content:center;font-size:1rem" onclick="showCheckout()">🛍️ Proceder al pago</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── CHECKOUT MODAL ─── -->
+  <div class="modal-overlay" id="checkout-modal">
+    <div class="modal" style="max-width:720px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
+        <h3 style="font-size:1.3rem;font-weight:800">📋 Checkout</h3>
+        <button onclick="closeCheckout()" style="background:none;border:none;color:var(--text-dim);font-size:1.5rem;cursor:pointer">✕</button>
+      </div>
+      <div class="checkout-layout">
+        <!-- LEFT: form -->
+        <div>
+          <h4 style="font-size:1rem;font-weight:800;margin-bottom:.8rem">👤 Información</h4>
+          <div class="field"><label>Nombre completo *</label><input type="text" id="ch-name" placeholder="Tu nombre" /></div>
+          <div class="field"><label>Email *</label><input type="email" id="ch-email" placeholder="tu@correo.com" /></div>
+          <div class="field"><label>Dirección de envío *</label><input type="text" id="ch-address" placeholder="Calle, ciudad, país" /></div>
+
+          <h4 style="font-size:1rem;font-weight:800;margin:1.2rem 0 .8rem">🚚 Envío</h4>
+          <div class="shipping-options" id="shipping-options">
+            <label class="shipping-option selected">
+              <input type="radio" name="shipping" value="standard" checked onchange="updateCheckoutSummary()" />
+              <div class="info"><div class="name">Estándar</div><div class="eta">5–7 días hábiles</div></div>
+              <div class="price" id="ship-standard-price">$5.99</div>
+            </label>
+            <label class="shipping-option">
+              <input type="radio" name="shipping" value="express" onchange="updateCheckoutSummary()" />
+              <div class="info"><div class="name">Express</div><div class="eta">2–3 días hábiles</div></div>
+              <div class="price" id="ship-express-price">$12.99</div>
+            </label>
+            <label class="shipping-option" id="shipping-free-option">
+              <input type="radio" name="shipping" value="free" onchange="updateCheckoutSummary()" />
+              <div class="info"><div class="name">Gratis</div><div class="eta">5–10 días hábiles</div></div>
+              <div class="price free">GRATIS</div>
+            </label>
+          </div>
+
+          <h4 style="font-size:1rem;font-weight:800;margin:1.2rem 0 .8rem">💳 Pago</h4>
+          <div class="payment-methods">
+            <label class="payment-method selected">
+              <input type="radio" name="payment" value="stripe" checked onchange="togglePaymentMethod()" />
+              <span class="icon">💳</span>
+              <span class="name">Tarjeta (Stripe)</span>
+            </label>
+            <label class="payment-method">
+              <input type="radio" name="payment" value="paypal" onchange="togglePaymentMethod()" />
+              <span class="icon">🅿️</span>
+              <span class="name">PayPal</span>
+            </label>
+          </div>
+
+          <div id="stripe-fields">
+            <div class="stripe-card">
+              <div class="row">
+                <div class="field"><label>Número de tarjeta</label><input type="text" placeholder="4242 4242 4242 4242" id="stripe-cardnum" /></div>
+              </div>
+              <div class="row">
+                <div class="field"><label>Vence</label><input type="text" placeholder="12/28" id="stripe-exp" /></div>
+                <div class="field"><label>CVC</label><input type="text" placeholder="123" id="stripe-cvc" /></div>
+              </div>
+              <div class="badge">🔒 Pagos seguros con Stripe · Modo prueba (sandbox)</div>
+            </div>
+          </div>
+
+          <div id="paypal-fields" style="display:none">
+            <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.5rem;text-align:center">
+              <div style="font-size:2.5rem;margin-bottom:.5rem">🅿️</div>
+              <div style="font-size:.9rem;color:var(--text-dim)">PayPal Sandbox — Inicia sesión para pagar</div>
+              <div style="margin-top:10px;padding:12px;background:#ffc439;color:#2c2e2f;border-radius:6px;font-weight:700;font-size:.9rem">🧪 Modo prueba (sandbox)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: summary -->
+        <div>
+          <h4 style="font-size:1rem;font-weight:800;margin-bottom:.8rem">📦 Resumen</h4>
+          <div class="order-summary" id="checkout-summary"></div>
+          <button class="pay-btn stripe" id="pay-btn" onclick="processPayment()">
+            <span class="spinner"></span>
+            <span class="btn-text">💳 Pagar con Stripe</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── CONFIRMATION MODAL ─── -->
+  <div class="modal-overlay" id="confirmation-modal">
+    <div class="modal" style="max-width:480px">
+      <div class="confirmation">
+        <div class="big-icon">🎉</div>
+        <h2>¡Pedido confirmado!</h2>
+        <div class="order-num" id="confirm-order-num">#0001</div>
+        <p>Recibirás un email con los detalles de tu pedido y el seguimiento del envío.</p>
+        <div class="details" id="confirm-details"></div>
+        <button class="btn btn-primary" onclick="closeConfirmation()" style="padding:14px 40px;font-size:1rem">✨ Seguir comprando</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
