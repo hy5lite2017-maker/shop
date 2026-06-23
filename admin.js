@@ -77,19 +77,34 @@ function openProductModal(product = null) {
   document.getElementById('product-modal').classList.add('show');
 }
 
-function previewProductImage() {
-  const url = document.getElementById('f-image').value.trim();
-  const p = document.getElementById('f-preview');
-  if (url) {
-    p.innerHTML = `<img src="${url}" onerror="this.outerHTML='<span style=font-size:2.5rem>👕</span>'" />`;
-  } else {
-    p.innerHTML = `<span style="font-size:2.5rem">👕</span>`;
-  }
+function setupDropZone() {
+  const zone = document.getElementById('f-dropzone');
+  const fileInput = document.getElementById('f-file');
+
+  zone.addEventListener('click', () => fileInput.click());
+
+  zone.addEventListener('dragover', e => {
+    e.preventDefault();
+    zone.classList.add('dragover');
+  });
+
+  zone.addEventListener('dragleave', () => {
+    zone.classList.remove('dragover');
+  });
+
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    zone.classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) {
+      loadImageFile(file);
+    } else {
+      showToast('❌ Solo se permiten imágenes', 'error');
+    }
+  });
 }
 
-function handleFileUpload(input) {
-  const file = input.files[0];
-  if (!file) return;
+function loadImageFile(file) {
   if (file.size > 2 * 1024 * 1024) {
     showToast('❌ La imagen no debe superar 2MB', 'error');
     return;
@@ -102,6 +117,30 @@ function handleFileUpload(input) {
   };
   reader.readAsDataURL(file);
 }
+
+function previewProductImage() {
+  const url = document.getElementById('f-image').value.trim();
+  const zone = document.getElementById('f-dropzone');
+  const content = document.getElementById('f-preview');
+  if (url) {
+    zone.classList.add('has-image');
+    content.innerHTML = `<img src="${url}" onerror="this.outerHTML='<span style=font-size:2.5rem>👕</span>'" />`;
+  } else {
+    zone.classList.remove('has-image');
+    content.innerHTML = `
+      <span class="drop-icon">+</span>
+      <span class="drop-text">Arrastra o haz clic para subir</span>
+    `;
+  }
+}
+
+function handleFileUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  loadImageFile(file);
+}
+
+document.addEventListener('DOMContentLoaded', setupDropZone);
 
 async function saveProduct() {
   const products = await getProducts();
