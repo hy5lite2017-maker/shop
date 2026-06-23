@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors({
   origin: ['https://animestyleshop.vercel.app', 'https://shop-one-sandy.vercel.app', 'http://localhost:3000', 'http://localhost:5500']
 }));
-app.use(express.json({ limit: '5mb' }));
+app.use(express.json({ limit: '50mb' }));
 
 app.post('/api/auth/login', login);
 app.use('/api/products', productsRouter);
