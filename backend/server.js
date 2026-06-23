@@ -12,7 +12,9 @@ const { login } = require('./middleware/auth');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(cors({
+  origin: ['https://shop-one-sandy.vercel.app', 'http://localhost:3000', 'http://localhost:5500']
+}));
 app.use(express.json({ limit: '5mb' }));
 
 app.post('/api/auth/login', login);
