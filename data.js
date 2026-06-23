@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = 'https://animestyle-api.onrender.com/api';
 
 const DEFAULT_PRODUCTS = [
   { id: 1, name: "Zoro — Wano Edition", series: "One Piece", description: "Camiseta oversized con estampado frontal y trasero de Zoro en su arco de Wano. Tela 100% algodón premium.", price: 44.90, rating: 4.9, image: "", tag: "new", tagText: "Nuevo" },
