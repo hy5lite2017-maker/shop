@@ -18,8 +18,8 @@ const DEFAULT_COUPONS = [
 async function apiFetch(path, opts = {}) {
   try {
     const res = await fetch(API_BASE + path, {
-      headers: { 'Content-Type': 'application/json', ...opts.headers },
-      ...opts
+      ...opts,
+      headers: { 'Content-Type': 'application/json', ...opts.headers }
     });
     if (!res.ok) return null;
     return await res.json();
