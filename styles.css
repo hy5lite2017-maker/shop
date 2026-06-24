@@ -21,7 +21,7 @@
 }
 html{scroll-behavior:smooth}
 body{
-  font-family:'Poppins','Inter',system-ui,sans-serif;
+  font-family:'Inter',system-ui,sans-serif;
   font-weight:400;
   background:var(--bg);
   color:var(--text);
@@ -37,7 +37,7 @@ body::before{
     radial-gradient(ellipse at 50% 80%,rgba(0,180,216,.04) 0%,transparent 50%),
     radial-gradient(ellipse at 75% 70%,rgba(255,184,77,.03) 0%,transparent 50%);
 }
-h1,h2,h3,h4,h5,h6{font-family:'Poppins','Inter',system-ui,sans-serif;font-weight:600;letter-spacing:-.5px}
+h1,h2,h3,h4,h5,h6{font-family:'Inter',system-ui,sans-serif;font-weight:700;letter-spacing:-.5px}
 
 /* ─── SCROLL ANIMATIONS ─── */
 .reveal{opacity:0;transform:translateY(40px);transition:all .7s cubic-bezier(.22,1,.36,1)}
@@ -271,7 +271,7 @@ nav{
   width:100%;margin-top:12px;padding:12px;
   background:transparent;border:1px solid var(--border);border-radius:var(--radius-full);
   color:var(--text);font-weight:700;font-size:.85rem;cursor:pointer;
-  transition:all .25s;font-family:'Poppins','Inter',system-ui,sans-serif;font-weight:500;
+  transition:all .25s;  font-family:'Inter',system-ui,sans-serif;font-weight:500;
 }
 .product-card:hover .add-cart{border-color:var(--purple);color:var(--purple)}
 .product-card .add-cart:hover{background:var(--grad-primary);color:#fff;border-color:transparent;transform:scale(1.02)}
