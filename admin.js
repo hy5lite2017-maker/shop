@@ -109,11 +109,26 @@ function loadImageFile(file) {
     showToast('❌ La imagen no debe superar 20MB', 'error');
     return;
   }
+  const bar = document.getElementById('f-progress');
+  const fill = document.getElementById('f-progress-fill');
+  bar.classList.add('active');
+  fill.style.width = '0%';
   const reader = new FileReader();
+  reader.onprogress = function(e) {
+    if (e.lengthComputable) {
+      fill.style.width = Math.round((e.loaded / e.total) * 100) + '%';
+    }
+  };
   reader.onload = function(e) {
+    fill.style.width = '100%';
+    setTimeout(() => bar.classList.remove('active'), 400);
     document.getElementById('f-image').value = e.target.result;
     previewProductImage();
     showToast('📸 Imagen cargada correctamente');
+  };
+  reader.onerror = function() {
+    bar.classList.remove('active');
+    showToast('❌ Error al leer la imagen', 'error');
   };
   reader.readAsDataURL(file);
 }
