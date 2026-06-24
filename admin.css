@@ -1,11 +1,11 @@
 /* ─── ADMIN PANEL ─── */
 :root {
-  --bg: #f5e8e8;
-  --surface: #fff5f5;
-  --surface2: #fdeaea;
-  --border: #e8d8d8;
-  --text: #1f1738;
-  --text-dim: #8b7fae;
+  --bg: #120808;
+  --surface: #1f1010;
+  --surface2: #2d1818;
+  --border: #3d2020;
+  --text: #f5ecec;
+  --text-dim: #b89898;
   --coral: #ff6b8b;
   --purple: #7c5cfc;
   --cyan: #00b4d8;
@@ -32,10 +32,10 @@ body {
 body::before {
   content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   background:
-    radial-gradient(ellipse at 15% 25%,rgba(124,92,252,.06) 0%,transparent 50%),
-    radial-gradient(ellipse at 85% 20%,rgba(255,107,139,.05) 0%,transparent 50%),
-    radial-gradient(ellipse at 50% 80%,rgba(0,180,216,.04) 0%,transparent 50%),
-    radial-gradient(ellipse at 75% 70%,rgba(255,184,77,.03) 0%,transparent 50%);
+    radial-gradient(ellipse at 15% 25%,rgba(124,92,252,.12) 0%,transparent 50%),
+    radial-gradient(ellipse at 85% 20%,rgba(255,107,139,.1) 0%,transparent 50%),
+    radial-gradient(ellipse at 50% 80%,rgba(0,180,216,.08) 0%,transparent 50%),
+    radial-gradient(ellipse at 75% 70%,rgba(255,184,77,.06) 0%,transparent 50%);
 }
 h1,h2,h3,h4,h5,h6{font-family:'Sora',system-ui,sans-serif;font-weight:700;letter-spacing:-.5px}
 .mesh-blob{
@@ -68,7 +68,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Sora',system-ui,sans-serif;font-weight:700;letter
 .login-box {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 3rem; width: 100%; max-width: 400px; text-align: center;
-  box-shadow: 0 4px 24px rgba(0,0,0,.04);
+  box-shadow: 0 4px 24px rgba(0,0,0,.2);
 }
 .login-box .logo { font-size: 2rem; font-weight: 700; background: var(--grad-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .login-box h2 { margin: 1rem 0 .5rem; font-size: 1.5rem; }
@@ -96,7 +96,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Sora',system-ui,sans-serif;font-weight:700;letter
 .topbar {
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 2rem; height: 64px;
-  background: rgba(255,255,255,.85); backdrop-filter: blur(20px);
+  background: rgba(18,8,8,.9); backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
   position: sticky; top: 0; z-index: 100;
 }
@@ -272,7 +272,7 @@ td .actions-cell { display: flex; gap: 6px; flex-wrap: wrap; }
 /* ─── MODAL ─── */
 .modal-overlay {
   display: none; position: fixed; inset: 0; z-index: 200;
-  background: rgba(31,23,56,.5); backdrop-filter: blur(4px);
+  background: rgba(0,0,0,.7); backdrop-filter: blur(4px);
   align-items: center; justify-content: center; padding: 2rem;
 }
 .modal-overlay.show { display: flex; }
