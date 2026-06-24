@@ -11,7 +11,7 @@ async function renderProducts() {
       ? `<img src="${p.image}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><span style="font-size:4rem;display:none">👕</span>`
       : `<span style="font-size:4rem">👕</span>`;
     return `<div class="product-card reveal" data-id="${p.id}">
-      <div class="img-wrap" style="position:relative">${tagHtml}${imgHtml}
+      <div class="img-wrap" style="position:relative;cursor:pointer">${tagHtml}${imgHtml}
         <button class="quick-view" aria-label="Vista rápida">🔍</button>
       </div>
       <div class="info">
@@ -327,11 +327,18 @@ function bindQuickView() {
     btn.removeEventListener('click', handleQuickView);
     btn.addEventListener('click', handleQuickView);
   });
+  document.querySelectorAll('.img-wrap').forEach(wrap => {
+    wrap.removeEventListener('click', handleQuickViewWrap);
+    wrap.addEventListener('click', handleQuickViewWrap);
+  });
 }
-async function handleQuickView(e) {
-  e.stopPropagation();
+function handleQuickViewWrap(e) {
+  if (e.target.closest('.quick-view') || e.target.closest('.add-cart')) return;
   const card = this.closest('.product-card');
   const id = parseInt(card.dataset.id);
+  openQuickView(id);
+}
+async function openQuickView(id) {
   const products = await getProducts();
   const p = products.find(x => x.id === id);
   if (!p) return;
@@ -346,6 +353,11 @@ async function handleQuickView(e) {
   document.getElementById('qv-rating').textContent = '⭐ ' + p.rating;
   document.getElementById('qv-add').dataset.product = JSON.stringify({ id: p.id, name: p.name, price: p.price });
   document.getElementById('quickview-modal').classList.add('show');
+}
+function handleQuickView(e) {
+  e.stopPropagation();
+  const card = this.closest('.product-card');
+  openQuickView(parseInt(card.dataset.id));
 }
 
 // ─── Hamburger ───
