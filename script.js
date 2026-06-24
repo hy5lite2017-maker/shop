@@ -10,7 +10,7 @@ async function renderProducts() {
     const imgHtml = p.image
       ? `<img src="${p.image}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><span style="font-size:4rem;display:none">👕</span>`
       : `<span style="font-size:4rem">👕</span>`;
-    return `<div class="product-card reveal">
+    return `<div class="product-card reveal" data-id="${p.id}">
       <div class="img-wrap" style="position:relative">${tagHtml}${imgHtml}
         <button class="quick-view" aria-label="Vista rápida">🔍</button>
       </div>
@@ -328,10 +328,24 @@ function bindQuickView() {
     btn.addEventListener('click', handleQuickView);
   });
 }
-function handleQuickView(e) {
+async function handleQuickView(e) {
   e.stopPropagation();
-  const product = this.closest('.product-card').querySelector('h4').textContent;
-  alert(`🔍 Vista rápida de: ${product}\n\nPróximamente: modal con imágenes, tallas y galería.`);
+  const card = this.closest('.product-card');
+  const id = parseInt(card.dataset.id);
+  const products = await getProducts();
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('qv-image').innerHTML = p.image
+    ? `<img src="${p.image}" alt="${p.name}" onerror="this.outerHTML='<span style=font-size:5rem>👕</span>'" />`
+    : `<span style="font-size:5rem">👕</span>`;
+  document.getElementById('qv-tag').innerHTML = p.tagText ? `<span class="tag ${p.tag}">${p.tagText}</span>` : '';
+  document.getElementById('qv-name').textContent = p.name;
+  document.getElementById('qv-series').textContent = p.series;
+  document.getElementById('qv-desc').textContent = p.description;
+  document.getElementById('qv-price').textContent = '$' + p.price.toFixed(2);
+  document.getElementById('qv-rating').textContent = '⭐ ' + p.rating;
+  document.getElementById('qv-add').dataset.product = JSON.stringify({ id: p.id, name: p.name, price: p.price });
+  document.getElementById('quickview-modal').classList.add('show');
 }
 
 // ─── Hamburger ───

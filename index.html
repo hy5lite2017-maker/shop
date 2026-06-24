@@ -286,6 +286,29 @@
     </div>
   </footer>
 
+  <!-- ─── QUICK VIEW MODAL ─── -->
+  <div class="modal-overlay" id="quickview-modal" onclick="if(event.target===this)closeModal('quickview-modal')">
+    <div class="modal qv-modal">
+      <button class="qv-close" onclick="closeModal('quickview-modal')">✕</button>
+      <div class="qv-layout">
+        <div class="qv-image" id="qv-image">
+          <span style="font-size:5rem">👕</span>
+        </div>
+        <div class="qv-info">
+          <div id="qv-tag"></div>
+          <h2 id="qv-name"></h2>
+          <p class="qv-series" id="qv-series"></p>
+          <p class="qv-desc" id="qv-desc"></p>
+          <div class="qv-row">
+            <span class="qv-price" id="qv-price"></span>
+            <span class="qv-rating" id="qv-rating"></span>
+          </div>
+          <button class="btn btn-primary qv-add" id="qv-add" onclick="handleAddCart.call(this, event)">🛒 Añadir al carrito</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ─── CART MODAL ─── -->
   <div class="modal-overlay" id="cart-modal">
     <div class="modal" style="max-width:600px">
