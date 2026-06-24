@@ -105,8 +105,8 @@ function setupDropZone() {
 }
 
 function loadImageFile(file) {
-  if (file.size > 2 * 1024 * 1024) {
-    showToast('❌ La imagen no debe superar 2MB', 'error');
+  if (file.size > 5 * 1024 * 1024) {
+    showToast('❌ La imagen no debe superar 5MB', 'error');
     return;
   }
   const reader = new FileReader();
