@@ -1,20 +1,20 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#120808;
-  --surface:#1f1010;
-  --surface2:#2d1818;
-  --border:#3d2020;
-  --text:#f5ecec;
-  --text-dim:#b89898;
+  --bg:#0a0f1f;
+  --surface:#111833;
+  --surface2:#1a2345;
+  --border:#283458;
+  --text:#e4ecff;
+  --text-dim:#7a8fbf;
   --coral:#ff6b8b;
-  --purple:#7c5cfc;
+  --purple:#6c7cfc;
   --cyan:#00b4d8;
   --amber:#ffb84d;
   --orange:#ff8c42;
   --blue:#4a9eff;
-  --grad-primary:linear-gradient(135deg,#ff6b8b,#7c5cfc);
+  --grad-primary:linear-gradient(135deg,#6c7cfc,#4a9eff);
   --grad-warm:linear-gradient(135deg,#ff6b8b,#ffb84d);
-  --grad-cool:linear-gradient(135deg,#7c5cfc,#00b4d8);
+  --grad-cool:linear-gradient(135deg,#6c7cfc,#00b4d8);
   --radius:20px;
   --radius-sm:12px;
   --radius-full:9999px;
@@ -32,10 +32,10 @@ body{
 body::before{
   content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   background:
-    radial-gradient(ellipse at 15% 25%,rgba(124,92,252,.12) 0%,transparent 50%),
-    radial-gradient(ellipse at 85% 20%,rgba(255,107,139,.1) 0%,transparent 50%),
-    radial-gradient(ellipse at 50% 80%,rgba(0,180,216,.08) 0%,transparent 50%),
-    radial-gradient(ellipse at 75% 70%,rgba(255,184,77,.06) 0%,transparent 50%);
+    radial-gradient(ellipse at 15% 25%,rgba(108,124,252,.1) 0%,transparent 50%),
+    radial-gradient(ellipse at 85% 20%,rgba(74,158,255,.08) 0%,transparent 50%),
+    radial-gradient(ellipse at 50% 80%,rgba(0,180,216,.06) 0%,transparent 50%),
+    radial-gradient(ellipse at 75% 70%,rgba(108,124,252,.05) 0%,transparent 50%);
 }
 h1,h2,h3,h4,h5,h6{font-family:'Sora',system-ui,sans-serif;font-weight:700;letter-spacing:-.5px}
 
@@ -83,7 +83,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Sora',system-ui,sans-serif;font-weight:700;letter
   filter:blur(120px);opacity:.12;
 }
 .mesh-blob:nth-child(6){width:600px;height:600px;top:-250px;right:-150px;background:var(--purple)}
-.mesh-blob:nth-child(7){width:500px;height:500px;bottom:-200px;left:-150px;background:var(--coral)}
+.mesh-blob:nth-child(7){width:500px;height:500px;bottom:-200px;left:-150px;background:var(--blue)}
 .mesh-blob:nth-child(8){width:350px;height:350px;top:40%;left:50%;background:var(--cyan);transform:translate(-50%,-50%)}
 
 /* ─── ANIME FACE SILHOUETTES ─── */
@@ -112,7 +112,7 @@ h1,h2,h3,h4,h5,h6{font-family:'Sora',system-ui,sans-serif;font-weight:700;letter
 /* ─── NAV ─── */
 nav{
   position:fixed;top:0;width:100%;z-index:100;
-  background:rgba(18,8,8,.85);backdrop-filter:blur(24px);
+  background:rgba(10,15,31,.85);backdrop-filter:blur(24px);
   border-bottom:1px solid var(--border);
   padding:0 2rem;display:flex;align-items:center;justify-content:space-between;
   height:72px;
@@ -243,7 +243,7 @@ nav{
 .bento-item h3{font-size:1.3rem;font-weight:800}
 .bento-item p{font-size:.85rem;color:var(--text-dim);margin-top:4px}
 .bento-item .price{font-weight:800;font-size:1.3rem;margin-top:10px;background:var(--grad-warm);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.bento-item:first-child{grid-column:1;grid-row:span 2;min-height:360px;background:linear-gradient(135deg,#2d1818,#1f1010)}
+.bento-item:first-child{grid-column:1;grid-row:span 2;min-height:360px;background:linear-gradient(135deg,#1a2345,#111833)}
 .bento-item:first-child h3,.bento-item:first-child p{color:var(--text)}
 .bento-item .bg-icon{
   position:absolute;right:0;bottom:0;font-size:6rem;opacity:.06;line-height:1;
@@ -276,7 +276,7 @@ nav{
 .product-card .img-wrap .tag.limited{background:linear-gradient(135deg,#fb923c,#f472b6);color:#fff}
 .product-card .img-wrap .quick-view{
   position:absolute;bottom:12px;right:12px;
-  background:rgba(31,16,16,.85);backdrop-filter:blur(8px);
+  background:rgba(17,24,51,.85);backdrop-filter:blur(8px);
   border:1px solid var(--border);color:var(--text);font-size:1.1rem;
   width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;
   opacity:0;transform:translateY(8px);transition:all .3s;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.06);
@@ -327,7 +327,7 @@ nav{
 
 /* ─── NEWSLETTER ─── */
 .newsletter-box{
-  background:linear-gradient(135deg,#2d1818,#1f1010);
+  background:linear-gradient(135deg,#1a2345,#111833);
   border:1px solid var(--border);border-radius:var(--radius);
   padding:4rem 3rem;text-align:center;position:relative;overflow:hidden;
 }
