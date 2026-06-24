@@ -1,6 +1,6 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#faf7ff;
+  --bg:#f0ecf8;
   --surface:#ffffff;
   --surface2:#f3effa;
   --border:#e2daf0;
@@ -85,6 +85,29 @@ h1,h2,h3,h4,h5,h6{font-family:'Sora',system-ui,sans-serif;font-weight:700;letter
 .mesh-blob:nth-child(6){width:600px;height:600px;top:-250px;right:-150px;background:var(--purple)}
 .mesh-blob:nth-child(7){width:500px;height:500px;bottom:-200px;left:-150px;background:var(--coral)}
 .mesh-blob:nth-child(8){width:350px;height:350px;top:40%;left:50%;background:var(--cyan);transform:translate(-50%,-50%)}
+
+/* ─── ANIME FACE SILHOUETTES ─── */
+.anime-face{
+  position:fixed;pointer-events:none;z-index:0;
+  width:48px;height:48px;opacity:.08;
+  animation:faceDrift 20s ease-in-out infinite;
+}
+.anime-face svg{width:100%;height:100%;fill:var(--text-dim);}
+.anime-face:nth-child(9){top:8%;left:12%;animation-delay:0s;animation-duration:22s}
+.anime-face:nth-child(10){top:18%;right:10%;animation-delay:2s;animation-duration:18s}
+.anime-face:nth-child(11){top:45%;left:4%;animation-delay:4s;animation-duration:24s}
+.anime-face:nth-child(12){top:55%;right:6%;animation-delay:1s;animation-duration:20s}
+.anime-face:nth-child(13){bottom:12%;left:15%;animation-delay:3s;animation-duration:19s}
+.anime-face:nth-child(14){bottom:25%;right:12%;animation-delay:5s;animation-duration:23s}
+.anime-face:nth-child(15){top:72%;left:8%;animation-delay:6s;animation-duration:21s}
+.anime-face:nth-child(16){bottom:8%;right:4%;animation-delay:2.5s;animation-duration:17s}
+
+@keyframes faceDrift{
+  0%,100%{transform:translate(0,0) rotate(0deg)}
+  25%{transform:translate(8px,-10px) rotate(3deg)}
+  50%{transform:translate(-4px,-18px) rotate(-2deg)}
+  75%{transform:translate(6px,-6px) rotate(4deg)}
+}
 
 /* ─── NAV ─── */
 nav{

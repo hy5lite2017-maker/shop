@@ -1,6 +1,6 @@
 /* ─── ADMIN PANEL ─── */
 :root {
-  --bg: #faf7ff;
+  --bg: #f0ecf8;
   --surface: #ffffff;
   --surface2: #f3effa;
   --border: #e2daf0;
@@ -45,6 +45,23 @@ h1,h2,h3,h4,h5,h6{font-family:'Sora',system-ui,sans-serif;font-weight:700;letter
 .mesh-blob:nth-child(1){width:600px;height:600px;top:-250px;right:-150px;background:var(--purple)}
 .mesh-blob:nth-child(2){width:500px;height:500px;bottom:-200px;left:-150px;background:var(--coral)}
 .mesh-blob:nth-child(3){width:350px;height:350px;top:40%;left:50%;background:var(--cyan);transform:translate(-50%,-50%)}
+.anime-face{
+  position:fixed;pointer-events:none;z-index:0;
+  width:48px;height:48px;opacity:.08;
+  animation:faceDrift 20s ease-in-out infinite;
+}
+.anime-face svg{width:100%;height:100%;fill:var(--text-dim);}
+.anime-face:nth-child(4){top:8%;left:12%;animation-delay:0s;animation-duration:22s}
+.anime-face:nth-child(5){top:18%;right:10%;animation-delay:2s;animation-duration:18s}
+.anime-face:nth-child(6){top:45%;left:4%;animation-delay:4s;animation-duration:24s}
+.anime-face:nth-child(7){top:55%;right:6%;animation-delay:1s;animation-duration:20s}
+.anime-face:nth-child(8){bottom:12%;left:15%;animation-delay:3s;animation-duration:19s}
+@keyframes faceDrift{
+  0%,100%{transform:translate(0,0) rotate(0deg)}
+  25%{transform:translate(8px,-10px) rotate(3deg)}
+  50%{transform:translate(-4px,-18px) rotate(-2deg)}
+  75%{transform:translate(6px,-6px) rotate(4deg)}
+}
 
 /* ─── LOGIN ─── */
 .login-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 2rem; }
