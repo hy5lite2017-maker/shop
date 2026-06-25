@@ -53,7 +53,7 @@ async function resetProducts() {
 
 // ─── ORDERS ───
 async function getOrders() {
-  const orders = await Order.find().sort({ id: -1 }).lean();
+  const orders = await Order.find().sort({ createdAt: -1 }).lean();
   return orders.map(stripMongo);
 }
 async function saveOrders(orders) {

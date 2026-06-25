@@ -52,7 +52,7 @@ const order = [
 ];
 
 const orderStatus = [
-  param('id').isInt({ min: 1 }).withMessage('ID inválido'),
+  param('id').matches(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i).withMessage('ID de pedido inválido'),
   body('status').isIn(['pending', 'processing', 'shipped', 'delivered', 'cancelled']).withMessage('Estado inválido'),
   handleErrors
 ];

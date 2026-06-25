@@ -136,7 +136,7 @@ async function addOrder(order) {
     return res.data;
   }
   const orders = JSON.parse(localStorage.getItem('animestyle_orders') || '[]');
-  order.id = orders.length ? Math.max(...orders.map(o => o.id)) + 1 : 1;
+  order.id = crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.random() * 16 | 0; return (c === 'x' ? r : r & 0x3 | 0x8).toString(16); });
   order.createdAt = new Date().toISOString();
   orders.unshift(order);
   localStorage.setItem('animestyle_orders', JSON.stringify(orders));
@@ -144,7 +144,7 @@ async function addOrder(order) {
 }
 
 async function updateOrderStatus(id, status) {
-  const res = await apiFetch('/orders/' + id + '/status', {
+  const res = await apiFetch('/orders/' + encodeURIComponent(id) + '/status', {
     method: 'PUT',
     body: JSON.stringify({ status }),
     headers: authHeaders()

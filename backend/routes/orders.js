@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const { v4: uuidv4 } = require('uuid');
 const db = require('../utils/database');
 const { verifyToken } = require('../middleware/auth');
 const validate = require('../middleware/validate');
@@ -20,10 +21,8 @@ router.put('/bulk', verifyToken, async (req, res) => {
 
 router.post('/', validate.order, async (req, res) => {
   const { items, customer, payment, subtotal, shipping, tax, total, couponCode, discount } = req.body;
-  const orders = await db.getOrders();
-  const id = orders.length ? orders.reduce((max, o) => Math.max(max, o.id || 0), 0) + 1 : 1;
   const order = {
-    id,
+    id: uuidv4(),
     items,
     customer,
     payment: typeof payment === 'object' ? payment.method : payment,
@@ -46,7 +45,7 @@ router.put('/:id/status', verifyToken, validate.orderStatus, async (req, res) =>
   const { id } = req.params;
   const { status } = req.body;
   const orders = await db.getOrders();
-  const idx = orders.findIndex(o => o.id === Number(id));
+  const idx = orders.findIndex(o => o.id === id);
   if (idx === -1) {
     return res.status(404).json({ success: false, error: 'Pedido no encontrado' });
   }

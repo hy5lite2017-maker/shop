@@ -274,11 +274,12 @@ async function renderOrders() {
   const statusLabels = { pending: '⏳ Pendiente', processing: '⚙️ Procesando', shipped: '🚚 Enviado', delivered: '✅ Entregado', cancelled: '❌ Cancelado' };
 
   container.innerHTML = orders.map(o => {
+    const shortId = o.id.length > 8 ? o.id.slice(0, 8) : String(o.id).padStart(4, '0');
     const itemsHtml = o.items.map(item => `<div class="item"><span class="name">${item.name} × ${item.quantity}</span><span>$${(item.price * item.quantity).toFixed(2)}</span></div>`).join('');
     return `<div class="order-card">
       <div class="order-header">
         <div>
-          <div class="order-id">#${String(o.id).padStart(4, '0')}</div>
+          <div class="order-id">#${shortId}</div>
           <div class="order-date">${new Date(o.createdAt).toLocaleDateString('es')} — ${new Date(o.createdAt).toLocaleTimeString('es', { hour: '2-digit', minute: '2-digit' })}</div>
         </div>
         <select class="status-select ${o.status}" onchange="changeOrderStatus(${o.id}, this.value)">
@@ -303,7 +304,8 @@ async function renderOrders() {
 async function changeOrderStatus(id, status) {
   await updateOrderStatus(id, status);
   renderOrders();
-  showToast(`📋 Pedido #${String(id).padStart(4, '0')} → ${status}`);
+  const shortId = id.length > 8 ? id.slice(0, 8) : String(id).padStart(4, '0');
+  showToast(`📋 Pedido #${shortId} → ${status}`);
 }
 
 // ─── DEMO ORDERS ───
@@ -327,7 +329,7 @@ async function fillDemoOrders() {
 
   const orders = existing;
   demos.forEach(d => {
-    d.id = orders.length ? orders.reduce((max, o) => Math.max(max, o.id || 0), 0) + 1 : 1;
+    d.id = crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.random() * 16 | 0; return (c === 'x' ? r : r & 0x3 | 0x8).toString(16); });
     orders.unshift(d);
   });
   await saveOrders(orders);

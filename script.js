@@ -298,7 +298,8 @@ async function processPayment() {
 
 // ─── Confirmation ───
 function showConfirmation(order, email) {
-  document.getElementById('confirm-order-num').textContent = '#' + String(order.id).padStart(4, '0');
+  const shortId = order.id.length > 8 ? order.id.slice(0, 8) : String(order.id).padStart(4, '0');
+  document.getElementById('confirm-order-num').textContent = '#' + shortId;
   document.getElementById('confirm-details').innerHTML = `
     <div><strong>Email:</strong> ${email}</div>
     <div><strong>Total pagado:</strong> $${order.total.toFixed(2)}</div>
