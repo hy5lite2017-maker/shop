@@ -1,5 +1,14 @@
 const API_BASE = 'https://animestyle-api.onrender.com/api';
 
+function sanitize(str) {
+  if (typeof str !== 'string') return str;
+  if (typeof DOMPurify !== 'undefined' && DOMPurify.sanitize) {
+    return DOMPurify.sanitize(str, { ALLOWED_TAGS: ['br', 'b', 'i', 'em', 'strong', 'span'], ALLOWED_ATTR: [] });
+  }
+  const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#x27;' };
+  return str.replace(/[&<>"']/g, c => map[c]);
+}
+
 const DEFAULT_PRODUCTS = [
   { id: 1, name: "Zoro — Wano Edition", series: "One Piece", description: "Camiseta oversized con estampado frontal y trasero de Zoro en su arco de Wano. Tela 100% algodón premium.", price: 44.90, rating: 4.9, image: "", tag: "new", tagText: "Nuevo" },
   { id: 2, name: "Gojo — Infinity", series: "Jujutsu Kaisen", description: "Diseño exclusivo de Gojo Satoru con efecto infinity. Estampado DTG de alta calidad.", price: 42.90, rating: 4.8, image: "", tag: "hot", tagText: "Popular" },

@@ -238,10 +238,10 @@ async function renderProducts() {
   }
   tbody.innerHTML = products.map(p => `<tr>
     <td><div class="thumb">${p.image ? `<img src="${p.image}" />` : '👕'}</div></td>
-    <td><strong>${p.name}</strong></td>
-    <td>${p.series}</td>
+    <td><strong>${sanitize(p.name)}</strong></td>
+    <td>${sanitize(p.series)}</td>
     <td>$${p.price.toFixed(2)}</td>
-    <td>${p.tagText ? `<span class="tag-badge ${tags[p.tag] || ''}">${p.tagText}</span>` : '—'}</td>
+    <td>${p.tagText ? `<span class="tag-badge ${tags[p.tag] || ''}">${sanitize(p.tagText)}</span>` : '—'}</td>
     <td>⭐ ${p.rating}</td>
     <td class="actions-cell">
       <button class="btn btn-secondary btn-xs" onclick="editProduct(${p.id})">✏️</button>
@@ -275,26 +275,26 @@ async function renderOrders() {
 
   container.innerHTML = orders.map(o => {
     const shortId = o.id.length > 8 ? o.id.slice(0, 8) : String(o.id).padStart(4, '0');
-    const itemsHtml = o.items.map(item => `<div class="item"><span class="name">${item.name} × ${item.quantity}</span><span>$${(item.price * item.quantity).toFixed(2)}</span></div>`).join('');
+    const itemsHtml = o.items.map(item => `<div class="item"><span class="name">${sanitize(item.name)} × ${item.quantity}</span><span>$${(item.price * item.quantity).toFixed(2)}</span></div>`).join('');
     return `<div class="order-card">
       <div class="order-header">
         <div>
           <div class="order-id">#${shortId}</div>
           <div class="order-date">${new Date(o.createdAt).toLocaleDateString('es')} — ${new Date(o.createdAt).toLocaleTimeString('es', { hour: '2-digit', minute: '2-digit' })}</div>
         </div>
-        <select class="status-select ${o.status}" onchange="changeOrderStatus(${o.id}, this.value)">
+        <select class="status-select ${o.status}" onchange="changeOrderStatus('${o.id}', this.value)">
           ${statuses.map(s => `<option value="${s}" ${s === o.status ? 'selected' : ''}>${statusLabels[s]}</option>`).join('')}
         </select>
       </div>
       <div class="order-info">
-        <div><strong>Cliente:</strong> ${o.customer?.name || '—'}</div>
-        <div><strong>Email:</strong> ${o.customer?.email || '—'}</div>
-        <div><strong>Dirección:</strong> ${o.customer?.address || '—'}</div>
-        <div><strong>Método:</strong> ${o.payment || '—'}</div>
+        <div><strong>Cliente:</strong> ${sanitize(o.customer?.name) || '—'}</div>
+        <div><strong>Email:</strong> ${sanitize(o.customer?.email) || '—'}</div>
+        <div><strong>Dirección:</strong> ${sanitize(o.customer?.address) || '—'}</div>
+        <div><strong>Método:</strong> ${sanitize(o.payment) || '—'}</div>
       </div>
       <div class="order-items">
         ${itemsHtml}
-        ${o.coupon ? `<div class="item" style="color:var(--green)"><span>Cupón: ${o.coupon}</span><span>-$${(o.discount || 0).toFixed(2)}</span></div>` : ''}
+        ${o.coupon ? `<div class="item" style="color:var(--green)"><span>Cupón: ${sanitize(o.coupon)}</span><span>-$${(o.discount || 0).toFixed(2)}</span></div>` : ''}
         <div class="total-row"><span>Total</span><span>$${o.total.toFixed(2)}</span></div>
       </div>
     </div>`;
@@ -350,7 +350,7 @@ async function renderCoupons() {
   container.innerHTML = coupons.map(c => `
     <div class="coupon-card">
       ${!c.active ? '<div class="inactive-overlay">🚫 Inactivo</div>' : ''}
-      <div class="code">${c.code}</div>
+      <div class="code">${sanitize(c.code)}</div>
       <div class="detail">${c.type === 'percentage' ? `${c.value}% OFF` : `$${c.value} OFF`} ${c.minPurchase > 0 ? `· Mín: $${c.minPurchase.toFixed(2)}` : ''}</div>
       <div class="detail"><strong>Usos:</strong> ${c.used} / ${c.maxUses}</div>
       <div class="detail"><strong>Expira:</strong> ${new Date(c.expiresAt).toLocaleDateString('es')}</div>
@@ -456,7 +456,7 @@ function renderAnalytics() {
     const maxCount = topProducts[0].count;
     topContainer.innerHTML = `<h3>🏆 Productos más vendidos</h3>
       ${topProducts.map(p => `<div class="bar-item">
-        <span class="bar-name">${p.name}</span>
+        <span class="bar-name">${sanitize(p.name)}</span>
         <div class="bar-track"><div class="bar-fill" style="width:${(p.count / maxCount * 100).toFixed(0)}%"></div></div>
         <span class="bar-count">${p.count}</span>
       </div>`).join('')}`;

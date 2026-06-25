@@ -6,17 +6,17 @@ async function renderProducts() {
   const tagClasses = { new: 'new', hot: 'hot', limited: 'limited' };
   grid.innerHTML = products.map(p => {
     const tagClass = tagClasses[p.tag] || '';
-    const tagHtml = p.tagText ? `<span class="tag ${tagClass}">${p.tagText}</span>` : '';
+    const tagHtml = p.tagText ? `<span class="tag ${tagClass}">${sanitize(p.tagText)}</span>` : '';
     const imgHtml = p.image
-      ? `<img src="${p.image}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><span style="font-size:4rem;display:none">👕</span>`
+      ? `<img src="${p.image}" alt="${sanitize(p.name)}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><span style="font-size:4rem;display:none">👕</span>`
       : `<span style="font-size:4rem">👕</span>`;
     return `<div class="product-card reveal" data-id="${p.id}">
       <div class="img-wrap" style="position:relative;cursor:pointer">${tagHtml}${imgHtml}
         <button class="quick-view" aria-label="Vista rápida">🔍</button>
       </div>
       <div class="info">
-        <h4>${p.name}</h4>
-        <p class="series">${p.series}</p>
+        <h4>${sanitize(p.name)}</h4>
+        <p class="series">${sanitize(p.series)}</p>
         <div class="row">
           <span class="price">$${p.price.toFixed(2)}</span>
           <span class="rating">⭐ ${p.rating}</span>
@@ -85,7 +85,7 @@ function openCart() {
   } else {
     container.innerHTML = cart.map(i => `
       <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)">
-        <div><strong>${i.name}</strong><br /><span style="font-size:.8rem;color:var(--text-dim)">$${i.price.toFixed(2)} c/u</span></div>
+        <div><strong>${sanitize(i.name)}</strong><br /><span style="font-size:.8rem;color:var(--text-dim)">$${i.price.toFixed(2)} c/u</span></div>
         <div style="display:flex;align-items:center;gap:8px">
           <button onclick="changeQty(${i.id}, -1)" style="background:var(--surface2);border:1px solid var(--border);border-radius:50%;width:30px;height:30px;cursor:pointer;color:var(--text);font-size:1rem">−</button>
           <span style="font-weight:700;min-width:20px;text-align:center">${i.qty}</span>
@@ -153,11 +153,11 @@ async function applyCoupon() {
   const msg = document.getElementById('coupon-msg');
   if (result.valid) {
     appliedCoupon = result;
-    msg.innerHTML = '<span style="color:var(--green)">✅ Cupón aplicado: ' + result.code + ' (−$' + result.discount.toFixed(2) + ')</span>';
+    msg.innerHTML = '<span style="color:var(--green)">✅ Cupón aplicado: ' + sanitize(result.code) + ' (−$' + result.discount.toFixed(2) + ')</span>';
     updateCartTotals();
   } else {
     appliedCoupon = null;
-    msg.innerHTML = '<span style="color:var(--red)">❌ ' + result.msg + '</span>';
+    msg.innerHTML = '<span style="color:var(--red)">❌ ' + sanitize(result.msg) + '</span>';
     updateCartTotals();
   }
 }
@@ -301,11 +301,11 @@ function showConfirmation(order, email) {
   const shortId = order.id.length > 8 ? order.id.slice(0, 8) : String(order.id).padStart(4, '0');
   document.getElementById('confirm-order-num').textContent = '#' + shortId;
   document.getElementById('confirm-details').innerHTML = `
-    <div><strong>Email:</strong> ${email}</div>
+    <div><strong>Email:</strong> ${sanitize(email)}</div>
     <div><strong>Total pagado:</strong> $${order.total.toFixed(2)}</div>
-    <div><strong>Método de pago:</strong> ${order.payment}</div>
+    <div><strong>Método de pago:</strong> ${sanitize(order.payment)}</div>
     <div><strong>Envío:</strong> ${order.shipping > 0 ? '$' + order.shipping.toFixed(2) : 'GRATIS'}</div>
-    <div><strong>Dirección:</strong> ${order.customer.address}</div>
+    <div><strong>Dirección:</strong> ${sanitize(order.customer?.address || '')}</div>
   `;
   document.getElementById('confirmation-modal').classList.add('show');
 }
@@ -344,9 +344,9 @@ async function openQuickView(id) {
   const p = products.find(x => x.id === id);
   if (!p) return;
   document.getElementById('qv-image').innerHTML = p.image
-    ? `<img src="${p.image}" alt="${p.name}" onerror="this.outerHTML='<span style=font-size:5rem>👕</span>'" />`
+    ? `<img src="${p.image}" alt="${sanitize(p.name)}" onerror="this.outerHTML='<span style=font-size:5rem>👕</span>'" />`
     : `<span style="font-size:5rem">👕</span>`;
-  document.getElementById('qv-tag').innerHTML = p.tagText ? `<span class="tag ${p.tag}">${p.tagText}</span>` : '';
+  document.getElementById('qv-tag').innerHTML = p.tagText ? `<span class="tag ${p.tag}">${sanitize(p.tagText)}</span>` : '';
   document.getElementById('qv-name').textContent = p.name;
   document.getElementById('qv-series').textContent = p.series;
   document.getElementById('qv-desc').textContent = p.description;
