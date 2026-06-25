@@ -13,18 +13,28 @@ async function doLogin() {
     err.classList.add('show');
   }
 }
-function doLogout() {
+function doLogout(msg) {
   sessionStorage.removeItem('animestyle_admin');
   sessionStorage.removeItem('animestyle_token');
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('admin-wrap').classList.remove('show');
+  if (msg) {
+    const err = document.getElementById('login-error');
+    err.textContent = msg;
+    err.classList.add('show');
+  }
 }
 document.addEventListener('DOMContentLoaded', () => {
   if (sessionStorage.getItem('animestyle_admin') === '1' && sessionStorage.getItem('animestyle_token')) {
+    if (isTokenExpired()) {
+      doLogout('⏰ Tu sesión ha expirado. Inicia sesión de nuevo.');
+      return;
+    }
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('admin-wrap').classList.add('show');
     initAdmin();
   }
+  setOnSessionExpired(() => doLogout('⏰ Tu sesión ha expirado. Inicia sesión de nuevo.'));
   document.getElementById('login-user').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
   document.getElementById('login-pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 });

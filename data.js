@@ -15,17 +15,39 @@ const DEFAULT_COUPONS = [
   { id: 3, code: "ENVIOFREE", type: "fixed", value: 10, minPurchase: 40, expiresAt: "2026-12-31", used: 0, maxUses: 50, active: true }
 ];
 
+let onSessionExpired = null;
+
+function setOnSessionExpired(cb) { onSessionExpired = cb; }
+
 async function apiFetch(path, opts = {}) {
   try {
     const res = await fetch(API_BASE + path, {
       ...opts,
       headers: { 'Content-Type': 'application/json', ...opts.headers }
     });
+    if (res.status === 401 && onSessionExpired) {
+      onSessionExpired();
+      return null;
+    }
     if (!res.ok) return null;
     return await res.json();
   } catch {
     return null;
   }
+}
+
+function getTokenPayload() {
+  const t = getToken();
+  if (!t) return null;
+  try {
+    return JSON.parse(atob(t.split('.')[1]));
+  } catch { return null; }
+}
+
+function isTokenExpired() {
+  const payload = getTokenPayload();
+  if (!payload || !payload.exp) return true;
+  return Date.now() >= payload.exp * 1000;
 }
 
 function getToken() {
