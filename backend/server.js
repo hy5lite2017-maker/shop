@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
 require('dotenv').config();
 
 const connectDB = require('./config/db');
@@ -12,6 +13,21 @@ const { login } = require('./middleware/auth');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'none'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'", "https://fonts.googleapis.com"],
+      fontSrc: ["https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:"],
+      connectSrc: ["'self'", "https://animestyle-api.onrender.com"],
+      frameAncestors: ["'none'"],
+      baseUri: ["'none'"],
+      formAction: ["'self'"]
+    }
+  }
+}));
 app.use(cors({
   origin: ['https://animestyleshop.vercel.app', 'https://shop-one-sandy.vercel.app', 'http://localhost:3000', 'http://localhost:5500']
 }));
