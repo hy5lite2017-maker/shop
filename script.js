@@ -21,7 +21,7 @@ async function renderProducts() {
           <span class="price">$${p.price.toFixed(2)}</span>
           <span class="rating">⭐ ${p.rating}</span>
         </div>
-        <button class="add-cart" data-product='${JSON.stringify({ id: p.id, name: p.name, price: p.price })}'>Añadir al carrito</button>
+        <button class="add-cart" data-product='${JSON.stringify({ id: p.id, name: p.name, price: p.price })}'>🛒 Añadir al carrito</button>
       </div>
     </div>`;
   }).join('');
