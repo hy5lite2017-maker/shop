@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const db = require('../utils/database');
 const { verifyToken } = require('../middleware/auth');
+const validate = require('../middleware/validate');
 
 const router = Router();
 
@@ -22,11 +23,8 @@ router.get('/reset', verifyToken, async (req, res) => {
   res.json({ success: true, data: products, message: 'Productos restablecidos' });
 });
 
-router.post('/', verifyToken, async (req, res) => {
+router.post('/', verifyToken, validate.product, async (req, res) => {
   const { name, series, description, price, rating, image, tag, tagText } = req.body;
-  if (!name || !series || !description || !price) {
-    return res.status(400).json({ success: false, error: 'Faltan campos requeridos (name, series, description, price)' });
-  }
   const products = await db.getProducts();
   const id = products.length ? Math.max(...products.map(p => p.id)) + 1 : 1;
   const product = { id, name, series, description, price: Number(price), rating: Number(rating) || 0, image: image || '', tag: tag || '', tagText: tagText || '' };
@@ -35,7 +33,7 @@ router.post('/', verifyToken, async (req, res) => {
   res.status(201).json({ success: true, data: product });
 });
 
-router.put('/:id', verifyToken, async (req, res) => {
+router.put('/:id', verifyToken, validate.idParam, validate.product, async (req, res) => {
   const { id } = req.params;
   const { name, series, description, price, rating, image, tag, tagText } = req.body;
   const products = await db.getProducts();
@@ -48,7 +46,7 @@ router.put('/:id', verifyToken, async (req, res) => {
   res.json({ success: true, data: products[idx] });
 });
 
-router.delete('/:id', verifyToken, async (req, res) => {
+router.delete('/:id', verifyToken, validate.idParam, async (req, res) => {
   const { id } = req.params;
   let products = await db.getProducts();
   const idx = products.findIndex(p => p.id === Number(id));

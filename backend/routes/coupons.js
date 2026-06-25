@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const db = require('../utils/database');
 const { verifyToken } = require('../middleware/auth');
+const validate = require('../middleware/validate');
 
 const router = Router();
 
@@ -17,11 +18,8 @@ router.put('/bulk', verifyToken, async (req, res) => {
   res.json({ success: true, data: req.body });
 });
 
-router.post('/validate', async (req, res) => {
+router.post('/validate', validate.couponValidate, async (req, res) => {
   const { code, subtotal } = req.body;
-  if (!code) {
-    return res.status(400).json({ success: false, error: 'Código requerido' });
-  }
   const coupons = await db.getCoupons();
   const coupon = coupons.find(c => c.code === code.toUpperCase());
   if (!coupon) {
@@ -44,11 +42,8 @@ router.post('/validate', async (req, res) => {
   res.json({ success: true, valid: true, data: { ...coupon, discount: Math.round(discount * 100) / 100 } });
 });
 
-router.post('/', verifyToken, async (req, res) => {
+router.post('/', verifyToken, validate.coupon, async (req, res) => {
   const { code, type, value, minPurchase, expiresAt, maxUses } = req.body;
-  if (!code || !type || value === undefined) {
-    return res.status(400).json({ success: false, error: 'Faltan campos (code, type, value)' });
-  }
   const coupons = await db.getCoupons();
   if (coupons.find(c => c.code === code.toUpperCase())) {
     return res.status(409).json({ success: false, error: 'El código ya existe' });
@@ -60,7 +55,7 @@ router.post('/', verifyToken, async (req, res) => {
   res.status(201).json({ success: true, data: coupon });
 });
 
-router.put('/:id', verifyToken, async (req, res) => {
+router.put('/:id', verifyToken, validate.couponUpdate, async (req, res) => {
   const { id } = req.params;
   const { code, type, value, minPurchase, expiresAt, maxUses, active } = req.body;
   const coupons = await db.getCoupons();
@@ -73,7 +68,7 @@ router.put('/:id', verifyToken, async (req, res) => {
   res.json({ success: true, data: coupons[idx] });
 });
 
-router.delete('/:id', verifyToken, async (req, res) => {
+router.delete('/:id', verifyToken, validate.idParam, async (req, res) => {
   const { id } = req.params;
   let coupons = await db.getCoupons();
   const idx = coupons.findIndex(c => c.id === Number(id));
@@ -85,7 +80,7 @@ router.delete('/:id', verifyToken, async (req, res) => {
   res.json({ success: true, message: 'Cupón eliminado' });
 });
 
-router.put('/:id/used', verifyToken, async (req, res) => {
+router.put('/:id/used', verifyToken, validate.idParam, async (req, res) => {
   const { id } = req.params;
   const coupons = await db.getCoupons();
   const idx = coupons.findIndex(c => c.id === Number(id));

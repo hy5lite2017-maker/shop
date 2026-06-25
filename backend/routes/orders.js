@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const db = require('../utils/database');
 const { verifyToken } = require('../middleware/auth');
+const validate = require('../middleware/validate');
 
 const router = Router();
 
@@ -17,11 +18,8 @@ router.put('/bulk', verifyToken, async (req, res) => {
   res.json({ success: true, data: req.body });
 });
 
-router.post('/', async (req, res) => {
+router.post('/', validate.order, async (req, res) => {
   const { items, customer, payment, subtotal, shipping, tax, total, couponCode, discount } = req.body;
-  if (!items || !customer || !payment || subtotal === undefined || shipping === undefined || tax === undefined || total === undefined) {
-    return res.status(400).json({ success: false, error: 'Faltan datos del pedido' });
-  }
   const orders = await db.getOrders();
   const id = orders.length ? orders.reduce((max, o) => Math.max(max, o.id || 0), 0) + 1 : 1;
   const order = {
@@ -44,13 +42,9 @@ router.post('/', async (req, res) => {
   res.status(201).json({ success: true, data: order });
 });
 
-router.put('/:id/status', verifyToken, async (req, res) => {
+router.put('/:id/status', verifyToken, validate.orderStatus, async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
-  const validStatuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
-  if (!validStatuses.includes(status)) {
-    return res.status(400).json({ success: false, error: `Estado inválido. Valores: ${validStatuses.join(', ')}` });
-  }
   const orders = await db.getOrders();
   const idx = orders.findIndex(o => o.id === Number(id));
   if (idx === -1) {

@@ -10,6 +10,7 @@ const productsRouter = require('./routes/products');
 const ordersRouter = require('./routes/orders');
 const couponsRouter = require('./routes/coupons');
 const { login } = require('./middleware/auth');
+const validate = require('./middleware/validate');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -51,7 +52,7 @@ app.use(cors({
 app.use(express.json({ limit: '50mb' }));
 app.use('/api', limiter);
 
-app.post('/api/auth/login', loginLimiter, login);
+app.post('/api/auth/login', loginLimiter, validate.login, login);
 app.use('/api/products', productsRouter);
 app.use('/api/orders', ordersRouter);
 app.use('/api/coupons', couponsRouter);
